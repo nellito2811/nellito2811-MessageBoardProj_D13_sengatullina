@@ -1,0 +1,24 @@
+<div class="topics">
+    <div class="topics__header">
+        <h2>Категории объявлений</h2>
+    </div>
+    <ul class="topics__list">
+        <li>
+        <a href="{% url 'board_app:home' %}" class="active">Все <span> {{ num_all_advertisements}} </span></a>
+        </li>
+
+        {% for category in categories %}
+            <li> 
+                <a href="{% url 'board_app:home' %}?q_category={{category.name}}"> {{ category.name }}<span>{{ category.advertisement_set.all.count }}</span></a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a class="btn btn--link" href="{% url 'board_app:categories' %}">
+        Больше
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+        <title>chevron-down</title>
+        <path d="M16 21l-13-13h-3l16 16 16-16h-3l-13 13z"></path>
+        </svg>
+    </a>
+</div>

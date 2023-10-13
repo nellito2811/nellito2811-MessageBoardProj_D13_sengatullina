@@ -1,0 +1,35 @@
+<div class="media_col">
+    <div class="media_col__header">
+        <h2>Media Files</h2>
+    </div>
+    <ul class="media_col__list">
+        {% comment %} <li>
+        <a href="{% url 'board_app:home' %}" class="active">All <span> {{ num_all_advertisements}} </span></a>
+        </li> {% endcomment %}
+
+        {% if advertisement.img and  advertisement.img_thumb  %}
+            <li>
+                <a class="spotlight" href="{{advertisement.img.url}}">
+                    <img src="{{advertisement.img_thumb.url}}" />
+                </a>
+            </li>
+        {%  endif %}
+
+        {% if advertisement.video %}
+         <li>
+            <video width="200" height="200"  controls width="250">
+                {% comment %} <source src="/media/cc0-videos/flower.webm" type="video/webm" /> {% endcomment %}
+                <source src="{{advertisement.video.url}}" type="video/mp4" />
+            
+            </video>
+        </li>
+        {%  endif %}
+
+
+        {% comment %} {% for category in categories %}
+            <li> 
+                <a href="{% url 'board_app:home' %}?q_category={{category.name}}"> {{ category.name }}<span>{{ category.advertisement_set.all.count }}</span></a>
+            </li>
+        {% endfor %} {% endcomment %}
+    </ul>
+</div>

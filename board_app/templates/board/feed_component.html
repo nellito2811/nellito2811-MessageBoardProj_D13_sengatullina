@@ -1,0 +1,51 @@
+{% for adv in advertisements %}
+<div class="roomListRoom">
+    <div class="roomListRoom__header">
+        <a href="{% url 'board_app:user-profile' adv.user.id %}" class="roomListRoom__author">
+            <div class="avatar avatar--small">
+            <img src="{{adv.user.avatar.url}}" />
+            </div>
+            <span>{{adv.user.username}}</span>
+        </a>
+        <div class="roomListRoom__actions">
+            {% if request.user == adv.user %}
+            <span> <a href="{% url 'board_app:update-adv' adv.id %}"> Ред.</a></span>
+            <span> <a href="{% url 'board_app:delete-adv' adv.id %}"> Удалить </a></span>
+            {% endif %}
+            <span>{{adv.created_at|timesince }} ago</span>
+        </div>
+    </div>
+
+    <div class="roomListRoom__content">
+        <a href="{% url 'board_app:advertisement' adv_id=adv.id  open_chat=0 chat_user_id=0 %}">{{ adv.title}}</a>
+        <p>
+        {{ adv.description}}
+        </p>
+    </div>
+    <div class="roomListRoom__meta">
+        
+        {% if adv.id in user_follow_advs %} 
+            <div class="btn btn--follow">
+                <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path clip-rule="evenodd" fill-rule="evenodd" d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z"></path></svg>
+            Откликнулся
+            </div> 
+     
+        {% elif adv.user != request.user %}
+        <!--START Button advertisement-->
+        <a class="btn btn--pill" href="{% url 'board_app:follow' adv.id %}">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                <title>add</title>
+                <path
+                d="M16.943 0.943h-1.885v14.115h-14.115v1.885h14.115v14.115h1.885v-14.115h14.115v-1.885h-14.115v-14.115z"
+                ></path>
+            </svg>
+            Откликнуться
+        </a>
+        <!--END Button advertisement -->
+        {% endif %}
+
+        <p class="roomListRoom__topic">{{adv.category}}</p>
+    </div>
+</div>
+{% endfor %}
